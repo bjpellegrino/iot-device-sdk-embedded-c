@@ -53,6 +53,8 @@
 
 #include <iotc_error.h>
 
+#include "GIoT.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -538,6 +540,11 @@ iotc_state_t iotc_publish(iotc_context_handle_t iotc_h, const char* topic,
   /* PRE-CONDITIONS */
   assert(NULL != topic);
   assert(NULL != msg);
+    
+    if (getTaskPoint() == 0) {
+        printf("IOTC Message ignored becuase last is still sending...\n");
+        return IOTC_STATE_OK;
+    }
 
   iotc_state_t state = IOTC_STATE_OK;
 

@@ -18,6 +18,7 @@
 #include "iotc_config.h"
 #include "iotc_event_thread_dispatcher.h"
 #include "iotc_globals.h"
+#include "GIoT.h"
 
 /**
  * @brief get_next_layer_state Function that checks what should be the next
@@ -101,6 +102,10 @@ iotc_state_t iotc_layer_continue_with_impl(
 
     iotc_layer_state_t next_state =
         get_next_layer_state(func, from_context, context, state);
+      
+      if (next_state != IOTC_LAYER_STATE_CONNECTING) {
+          setTaskPoint(1);
+      }
 
     IOTC_THIS_LAYER_STATE_UPDATE(from_context, next_state);
   }
